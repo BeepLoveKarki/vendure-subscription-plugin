@@ -60,7 +60,7 @@ type Phone implements Node {
 }	
 ```
 
-#Inputs
+# Inputs
 
 ```
 input EmailAddInput{
@@ -98,7 +98,7 @@ extend type Mutation {
 }	
 ```
 
-#Admin Type, Query and Mutation
+# Admin Type, Query and Mutation
 
 ```
 type EmailList implements PaginatedList {
