@@ -1,0 +1,40 @@
+{
+  "overwrite": true,
+  "config": {
+    "strict": true
+  },
+  "generates": {
+    "src/generated-admin-types.ts": {
+      "schema": "http://localhost:3000/admin-api",
+      "plugins": [
+        {
+          "add": "// tslint:disable"
+        },
+        "typescript",
+        "typescript-compatibility"
+      ]
+    },
+    "src/generated-shop-types.ts": {
+      "schema": "http://localhost:3000/shop-api",
+      "plugins": [
+        {
+          "add": "// tslint:disable"
+        },
+        "typescript",
+        "typescript-compatibility"
+      ]
+    },
+    "src/ui-extensions/generated-types.ts": {
+      "schema": "http://localhost:3000/admin-api",
+      "documents": "src/ui-extensions/**/*.graphql.ts",
+      "plugins": [
+        {
+          "add": "// tslint:disable"
+        },
+        "typescript",
+        "typescript-compatibility",
+        "typescript-operations"
+      ]
+    }
+  }
+}

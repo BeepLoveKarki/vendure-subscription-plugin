@@ -1,0 +1,17 @@
+{
+ "vdr-subscription-plugin":{
+    "create-new-email": "Create New Email",
+	"search-by-email": "Search By Email",
+	"create-new-phone": "Create New Phone",
+	"search-by-phone": "Search By Phone",
+	"confirm-delete-email": "Delete Email?",
+	"confirm-delete-phone": "Delete Phone?",
+	"download-csv": "Download CSV",
+	"email": "Email Address",
+	"phone": "Phone Number",
+	"created": "Created At",
+	"updated": "Updated At",
+	"email-label": "Email Address",
+    "phone-label": "Phone Number"
+ }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "vendure-subscription-plugin",
+  "version": "0.0.1",
+  "description": "A Vendure plugin for email and phone subscriptions/newsletter",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "author": "Biplab Karki <biplabkarki04@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "watch": "tsc --watch",
+    "build": "rimraf lib && tsc",
+    "generate-types": "gql-gen --config codegen.json"
+  },
+  "devDependencies": {
+    "@vendure/admin-ui": "^0.13.0",
+    "@vendure/asset-server-plugin": "^0.13.0",
+    "@vendure/core": "^0.13.0",
+    "@vendure/ui-devkit": "^0.13.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.5",
+    "@graphql-codegen/typescript-compatibility": "^1.16.2",
+    "@graphql-codegen/cli": "^1.16.2",
+    "@graphql-codegen/fragment-matcher": "^1.16.2",
+    "@graphql-codegen/introspection": "^1.16.2",
+    "@graphql-codegen/near-operation-file-preset": "^1.16.2",
+    "@graphql-codegen/schema-ast": "^1.16.2",
+    "@graphql-codegen/typescript": "^1.16.2",
+    "@graphql-codegen/typescript-operations": "^1.16.2",
+    "@types/jest": "25.1.4",
+    "@types/node": "12.12.0",
+    "@typescript-eslint/eslint-plugin": "3.2.0",
+    "@typescript-eslint/parser": "3.2.0"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.15.1"
+  }
+}

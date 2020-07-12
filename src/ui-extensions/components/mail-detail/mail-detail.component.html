@@ -1,0 +1,29 @@
+<vdr-action-bar>
+    <vdr-ab-right>
+        <button
+            class="btn btn-primary"
+			id="custbtn"
+            *ngIf="which; else updateButton"
+            (click)="create()"
+            [disabled]="!(detailForm.valid && detailForm.dirty)"
+        >
+            {{ 'common.create' | translate }}
+        </button>
+        <ng-template #updateButton>
+            <button
+                class="btn btn-primary"
+				id="editbtn"
+                (click)="save()"
+                [disabled]="!(detailForm.valid && detailForm.dirty)"
+            >
+                {{ 'common.update' | translate }}
+            </button>
+        </ng-template>
+    </vdr-ab-right>
+</vdr-action-bar>
+
+<form class="form" [formGroup]="detailForm">
+    <vdr-form-field [label]="'vdr-subscription-plugin.email-label' | translate" for="email">
+        <input id="email" type="email" formControlName="email" [readonly]="!'UpdateSettings'" />
+    </vdr-form-field>
+</form>
