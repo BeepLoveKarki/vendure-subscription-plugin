@@ -1,5 +1,4 @@
-import { Connection } from 'typeorm';
-import { ListQueryBuilder } from '@vendure/core';
+import { ListQueryBuilder, TransactionalConnection } from '@vendure/core';
 import { ListQueryOptions } from '@vendure/core/dist/common/types/common-types';
 import { PhoneSubscriptionEntity } from '../entities/phonesubscription.entity';
 import { PluginInitOptions } from '../types';
@@ -7,7 +6,7 @@ export declare class PhoneSubscriptionService {
     private connection;
     private options;
     private listQueryBuilder;
-    constructor(connection: Connection, options: PluginInitOptions, listQueryBuilder: ListQueryBuilder);
+    constructor(connection: TransactionalConnection, options: PluginInitOptions, listQueryBuilder: ListQueryBuilder);
     getAllPhones(ctx: any, options?: ListQueryOptions<PhoneSubscriptionEntity>): Promise<{
         items: PhoneSubscriptionEntity[];
         totalItems: number;

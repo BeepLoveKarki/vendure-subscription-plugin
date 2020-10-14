@@ -1,5 +1,4 @@
-import { Connection } from 'typeorm';
-import { ListQueryBuilder } from '@vendure/core';
+import { ListQueryBuilder, TransactionalConnection } from '@vendure/core';
 import { ListQueryOptions } from '@vendure/core/dist/common/types/common-types';
 import { MailSubscriptionEntity } from '../entities/mailsubscription.entity';
 import { PluginInitOptions } from '../types';
@@ -7,7 +6,7 @@ export declare class MailSubscriptionService {
     private connection;
     private options;
     private listQueryBuilder;
-    constructor(connection: Connection, options: PluginInitOptions, listQueryBuilder: ListQueryBuilder);
+    constructor(connection: TransactionalConnection, options: PluginInitOptions, listQueryBuilder: ListQueryBuilder);
     getAllMails(ctx: any, options?: ListQueryOptions<MailSubscriptionEntity>): Promise<{
         items: MailSubscriptionEntity[];
         totalItems: number;

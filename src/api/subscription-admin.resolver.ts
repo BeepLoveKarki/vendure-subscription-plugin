@@ -1,13 +1,13 @@
 import { Args, Parent, Query, Resolver, Mutation } from '@nestjs/graphql';
 import { MailSubscriptionService } from '../service/mailsubscription.service';
 import { PhoneSubscriptionService } from '../service/phonesubscription.service';
-import { RequestContext, Ctx, Allow, Permission } from '@vendure/core';
+import { RequestContext, Ctx, Allow, Permission, Transaction } from '@vendure/core';
 
 @Resolver()
 export class SubscriptionAdminResolver {
     constructor(private mailsubscriptionService: MailSubscriptionService, private phonesubscriptionService: PhoneSubscriptionService) {
     }
-
+	
     @Query()
 	@Allow(Permission.ReadSettings)
     SubscriptionEmails(@Ctx() ctx: RequestContext, @Args() args: any) {
@@ -40,7 +40,7 @@ export class SubscriptionAdminResolver {
 	
 	
 	
-	
+	@Transaction()
 	@Mutation()
 	@Allow(Permission.CreateSettings)
 	addSubscriptionEmail(@Ctx() ctx: RequestContext, @Args() args: any){
@@ -48,6 +48,7 @@ export class SubscriptionAdminResolver {
 	   return this.mailsubscriptionService.addMail(ctx,input);
 	}
 	
+	@Transaction()
 	@Mutation()
 	@Allow(Permission.CreateSettings)
 	addSubscriptionPhone(@Ctx() ctx: RequestContext, @Args() args: any){
@@ -57,7 +58,7 @@ export class SubscriptionAdminResolver {
 	
 	
 	
-	
+	@Transaction()
 	@Mutation()
 	@Allow(Permission.UpdateSettings)
 	updateSubscriptionEmail(@Ctx() ctx: RequestContext, @Args() args: any){
@@ -65,6 +66,7 @@ export class SubscriptionAdminResolver {
 	   return this.mailsubscriptionService.updateMail(ctx,input);
 	}
 	
+	@Transaction()
 	@Mutation()
 	@Allow(Permission.UpdateSettings)
 	updateSubscriptionPhone(@Ctx() ctx: RequestContext, @Args() args: any){
@@ -74,13 +76,14 @@ export class SubscriptionAdminResolver {
 	
 	
 	
-	
+	@Transaction()
 	@Mutation()
 	@Allow(Permission.DeleteSettings)
 	deleteSubscriptionEmail(@Ctx() ctx: RequestContext, @Args() args: any){
 	   return this.mailsubscriptionService.deleteMail(ctx,args.id);
 	}
 	
+	@Transaction()
 	@Mutation()
 	@Allow(Permission.DeleteSettings)
 	deleteSubscriptionPhone(@Ctx() ctx: RequestContext, @Args() args: any){
@@ -88,13 +91,14 @@ export class SubscriptionAdminResolver {
 	}
 	
 	
-	
+	@Transaction()
 	@Mutation()
 	@Allow(Permission.DeleteSettings)
 	deleteAllSubscriptionEmails(@Ctx() ctx: RequestContext){
 	   return this.mailsubscriptionService.deleteAllMails(ctx);
 	}
 	
+	@Transaction()
 	@Mutation()
 	@Allow(Permission.DeleteSettings)
 	deleteAllSubscriptionPhones(@Ctx() ctx: RequestContext){

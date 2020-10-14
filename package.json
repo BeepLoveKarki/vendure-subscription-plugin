@@ -15,11 +15,15 @@
     "build": "rimraf lib && tsc",
     "generate-types": "gql-gen --config codegen.json"
   },
+  "resolutions": {
+    "tslib": "1.11.2",
+    "graphql": "15.3.0"
+  },
   "devDependencies": {
-    "@vendure/admin-ui": "^0.13.0",
-    "@vendure/asset-server-plugin": "^0.13.0",
-    "@vendure/core": "^0.13.0",
-    "@vendure/ui-devkit": "^0.13.0",
+    "@vendure/admin-ui": "^0.16.0",
+    "@vendure/asset-server-plugin": "^0.16.0",
+    "@vendure/core": "^0.16.0",
+    "@vendure/ui-devkit": "^0.16.0",
     "rimraf": "^3.0.2",
     "typescript": "^3.9.5",
     "@graphql-codegen/typescript-compatibility": "^1.16.2",

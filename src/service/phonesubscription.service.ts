@@ -1,8 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { InjectConnection } from '@nestjs/typeorm';
-import { Connection } from 'typeorm';
 
-import { ListQueryBuilder,getEntityOrThrow } from '@vendure/core';
+import { ListQueryBuilder,getEntityOrThrow, TransactionalConnection } from '@vendure/core';
 
 import { ListQueryOptions } from '@vendure/core/dist/common/types/common-types';
 
@@ -13,7 +11,7 @@ import { PluginInitOptions } from '../types';
 @Injectable()
 export class PhoneSubscriptionService {
 
-    constructor(@InjectConnection() private connection: Connection,
+    constructor(private connection: TransactionalConnection,
                 @Inject(PLUGIN_INIT_OPTIONS) private options: PluginInitOptions,
 				private listQueryBuilder: ListQueryBuilder) {}
 
@@ -30,17 +28,17 @@ export class PhoneSubscriptionService {
     }
 	
 	async getPhoneById(ctx,data){
-	   return getEntityOrThrow(this.connection, PhoneSubscriptionEntity, data);
+	   return this.connection.getEntityOrThrow(ctx,PhoneSubscriptionEntity, data);
 	}
 	
 	async addSinglePhone(ctx,data){
-	   const createdVariant = this.connection.getRepository(PhoneSubscriptionEntity).create(data);
-	   const savedVariant = await this.connection.getRepository(PhoneSubscriptionEntity).save(createdVariant);
+	   const createdVariant = await this.connection.getRepository(ctx,PhoneSubscriptionEntity).create(data);
+	   const savedVariant = await this.connection.getRepository(ctx,PhoneSubscriptionEntity).save(createdVariant);
 	   return Object(savedVariant).id;
 	}
 	
 	async updateSinglePhone(ctx,data){
-	   const createdVariant = await this.connection.getRepository(PhoneSubscriptionEntity).update(data.id,{phone:data.phone});
+	   const createdVariant = await this.connection.getRepository(ctx,PhoneSubscriptionEntity).update(data.id,{phone:data.phone});
 	   return data.id;
 	}
 	
@@ -50,7 +48,7 @@ export class PhoneSubscriptionService {
             const id = await this.addSinglePhone(ctx, phoneInput);
             ids.push(id);
         }
-        const createdVariants = await this.connection.getRepository(PhoneSubscriptionEntity).findByIds(ids);
+        const createdVariants = await this.connection.getRepository(ctx,PhoneSubscriptionEntity).findByIds(ids);
 		return createdVariants;
 	}
 	
@@ -60,18 +58,18 @@ export class PhoneSubscriptionService {
             const id = await this.updateSinglePhone(ctx, phoneInput);
             ids.push(id);
         }
-        const createdVariants = await this.connection.getRepository(PhoneSubscriptionEntity).findByIds(ids);
+        const createdVariants = await this.connection.getRepository(ctx,PhoneSubscriptionEntity).findByIds(ids);
 		return createdVariants;
 	}
 	
 	async deletePhone(ctx,ids){
-	   const Variants = await this.connection.getRepository(PhoneSubscriptionEntity).findByIds(ids);
-	   this.connection.getRepository(PhoneSubscriptionEntity).delete(ids);
+	   const Variants = await this.connection.getRepository(ctx,PhoneSubscriptionEntity).findByIds(ids);
+	   this.connection.getRepository(ctx,PhoneSubscriptionEntity).delete(ids);
 	   return Variants;
 	}
 	
 	deleteAllPhones(ctx){
-	   this.connection.getRepository(PhoneSubscriptionEntity).clear();
+	   this.connection.getRepository(ctx,PhoneSubscriptionEntity).clear();
 	   return true;
 	}
 	

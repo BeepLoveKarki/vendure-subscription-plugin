@@ -1,8 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { InjectConnection } from '@nestjs/typeorm';
-import { Connection } from 'typeorm';
 
-import { ListQueryBuilder,getEntityOrThrow } from '@vendure/core';
+import { ListQueryBuilder,getEntityOrThrow, TransactionalConnection } from '@vendure/core';
 
 import { ListQueryOptions } from '@vendure/core/dist/common/types/common-types';
 
@@ -13,7 +11,7 @@ import { PluginInitOptions } from '../types';
 @Injectable()
 export class MailSubscriptionService {
 
-    constructor(@InjectConnection() private connection: Connection,
+    constructor(private connection: TransactionalConnection,
                 @Inject(PLUGIN_INIT_OPTIONS) private options: PluginInitOptions,
 				private listQueryBuilder: ListQueryBuilder) {}
 
@@ -30,17 +28,17 @@ export class MailSubscriptionService {
     }
 	
 	async getMailById(ctx,data){
-	   return getEntityOrThrow(this.connection, MailSubscriptionEntity, data);
+	   return this.connection.getEntityOrThrow(ctx,MailSubscriptionEntity, data);
 	}
 	
 	async addSingleMail(ctx,data){
-	   const createdVariant = this.connection.getRepository(MailSubscriptionEntity).create(data);
-	   const savedVariant = await this.connection.getRepository(MailSubscriptionEntity).save(createdVariant);
+	   const createdVariant = await this.connection.getRepository(ctx,MailSubscriptionEntity).create(data);
+	   const savedVariant = await this.connection.getRepository(ctx,MailSubscriptionEntity).save(createdVariant);
 	   return Object(savedVariant).id;
 	}
 	
 	async updateSingleMail(ctx,data){
-	   const createdVariant = await this.connection.getRepository(MailSubscriptionEntity).update(data.id,{email:data.email});
+	   const createdVariant = await this.connection.getRepository(ctx,MailSubscriptionEntity).update(data.id,{email:data.email});
 	   return data.id;
 	}
 	
@@ -50,7 +48,7 @@ export class MailSubscriptionService {
             const id = await this.addSingleMail(ctx, emailInput);
             ids.push(id);
         }
-        const createdVariants = await this.connection.getRepository(MailSubscriptionEntity).findByIds(ids);
+        const createdVariants = await this.connection.getRepository(ctx,MailSubscriptionEntity).findByIds(ids);
 		return createdVariants;
 	}
 	
@@ -60,18 +58,18 @@ export class MailSubscriptionService {
             const id = await this.updateSingleMail(ctx, emailInput);
             ids.push(id);
         }
-        const createdVariants = await this.connection.getRepository(MailSubscriptionEntity).findByIds(ids);
+        const createdVariants = await this.connection.getRepository(ctx,MailSubscriptionEntity).findByIds(ids);
 		return createdVariants;
 	}
 	
 	async deleteMail(ctx,ids){
-	   const Variants = await this.connection.getRepository(MailSubscriptionEntity).findByIds(ids);
-	   this.connection.getRepository(MailSubscriptionEntity).delete(ids);
+	   const Variants = await this.connection.getRepository(ctx,MailSubscriptionEntity).findByIds(ids);
+	   this.connection.getRepository(ctx,MailSubscriptionEntity).delete(ids);
 	   return Variants;
 	}
 	
 	deleteAllMails(ctx){
-	   this.connection.getRepository(MailSubscriptionEntity).clear();
+	   this.connection.getRepository(ctx,MailSubscriptionEntity).clear();
 	   return true;
 	}
 	
