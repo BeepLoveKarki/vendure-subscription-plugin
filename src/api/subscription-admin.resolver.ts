@@ -9,14 +9,14 @@ export class SubscriptionAdminResolver {
     }
 	
     @Query()
-	@Allow(Permission.ReadSettings)
+	@Allow(Permission.SuperAdmin)
     SubscriptionEmails(@Ctx() ctx: RequestContext, @Args() args: any) {
 		const {options} = args;
         return this.mailsubscriptionService.getAllMails(ctx,options || undefined);
     }
 	
 	@Query()
-	@Allow(Permission.ReadSettings)
+	@Allow(Permission.SuperAdmin)
     SubscriptionPhones(@Ctx() ctx: RequestContext, @Args() args: any) {
 		const {options} = args;
         return this.phonesubscriptionService.getAllPhones(ctx,options || undefined);
@@ -25,14 +25,14 @@ export class SubscriptionAdminResolver {
 	
 	
 	@Query()
-	@Allow(Permission.ReadSettings)
+	@Allow(Permission.SuperAdmin)
     SubscriptionEmail(@Ctx() ctx: RequestContext, @Args() args: any) {
 		const {id} = args;
         return this.mailsubscriptionService.getMailById(ctx,id);
     }
 	
 	@Query()
-	@Allow(Permission.ReadSettings)
+	@Allow(Permission.SuperAdmin)
     SubscriptionPhone(@Ctx() ctx: RequestContext, @Args() args: any) {
 		const {id} = args;
         return this.phonesubscriptionService.getPhoneById(ctx,id);
