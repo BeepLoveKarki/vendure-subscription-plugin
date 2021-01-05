@@ -13,14 +13,13 @@ import { SharedModule, addNavMenuSection } from '@vendure/admin-ui/core';
         routerLink: ['/extensions/subscribedmails'],
         // Icon can be any of https://clarity.design/icons
         icon: 'envelope',
-		requiresPermission: 'SuperAdmin',
       },{
 	    id: 'phones',
         label: 'Phones',
         routerLink: ['/extensions/subscribedphones'],
         icon: 'phone-handset',
-		requiresPermission: 'SuperAdmin',
 	  }],
+	  requiresPermission: 'SuperAdmin',
     },
     // Add this section before the "settings" section
     'settings'),
