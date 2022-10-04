@@ -84,7 +84,7 @@ export class AllMailsListComponent extends BaseListComponent<
          query: GET_ALL_EMAILS,
 		 variables: args
       }).valueChanges.subscribe((data) => {
-		  CsvDataService.exportToCsv('danfe-subscribed-emails.csv', data.data.SubscriptionEmails.items);
+		  CsvDataService.exportToCsv('subscribed-emails.csv', data.data.SubscriptionEmails.items);
       });
 	  
 	   

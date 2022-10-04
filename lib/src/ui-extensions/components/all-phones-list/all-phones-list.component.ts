@@ -92,7 +92,7 @@ export class AllPhonesListComponent extends BaseListComponent<
          query: GET_ALL_PHONES,
 		 variables: args
       }).valueChanges.subscribe((data) => {
-		  CsvDataService.exportToCsv('danfe-subscribed-phones.csv', data.data.SubscriptionPhones.items);
+		  CsvDataService.exportToCsv('subscribed-phones.csv', data.data.SubscriptionPhones.items);
       });
 	  
 	   
